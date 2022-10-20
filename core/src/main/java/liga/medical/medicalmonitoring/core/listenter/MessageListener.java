@@ -1,12 +1,10 @@
 package liga.medical.medicalmonitoring.core.listenter;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.logging.Logger;
 
 @Component
@@ -21,8 +19,5 @@ public class MessageListener {
         String messageType = String.valueOf(body.get("type")).replace('\"', ' ').strip() + "_queue";
         String message = String.valueOf(body.get("message")).replace('\"', ' ').strip();
         template.convertAndSend(messageType, message);
-
     }
-
-
 }
