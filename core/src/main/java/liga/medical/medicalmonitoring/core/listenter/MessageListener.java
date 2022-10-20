@@ -16,7 +16,7 @@ public class MessageListener {
     @Autowired
     AmqpTemplate template;
 
-    @RabbitListener(queues = "common-monitoring")
+    @RabbitListener(queues = "common_monitoring")
     public void worker1(JsonNode body) {
         String messageType = String.valueOf(body.get("type")).replace('\"', ' ').strip() + "_queue";
         String message = String.valueOf(body.get("message")).replace('\"', ' ').strip();
