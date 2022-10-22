@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 @Configuration
 public class RabbitConfig {
-    private static final String LOCALHOST = "172.22.0.3";
+    private static final String LOCALHOST = "172.10.0.2";
     private static final String DAILY_QUEUE = "daily_queue";
     private static final String ALERT_QUEUE = "alert_queue";
     private static final String ERROR_QUEUE = "error_queue";
