@@ -15,22 +15,22 @@ import java.util.logging.Logger;
 public class RabbitConfig {
 
     @Value("${spring.rabbitmq.host}")
-    private static String LOCALHOST;
+    private String LOCALHOST;
 
     @Value("${spring.rabbitmq.username}")
-    private static String username;
+    private String username;
 
     @Value("${spring.rabbitmq.password}")
-    private static String password;
+    private String password;
 
     @Value("${spring.rabbitmq.daily_queue}")
-    private static String DAILY_QUEUE;
+    private String DAILY_QUEUE;
 
     @Value("${spring.rabbitmq.alert_queue}")
-    private static String ALERT_QUEUE;
+    private String ALERT_QUEUE;
 
     @Value("${spring.rabbitmq.error_queue}")
-    private static String ERROR_QUEUE;
+    private String ERROR_QUEUE;
 
     Logger logger = Logger.getLogger(String.valueOf(RabbitConfig.class));
 
