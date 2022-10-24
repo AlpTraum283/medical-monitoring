@@ -9,13 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.logging.Logger;
-
 @Configuration
 public class RabbitConfig {
 
     @Value("${spring.rabbitmq.host}")
-    private String LOCALHOST;
+    private String localhost;
 
     @Value("${spring.rabbitmq.username}")
     private String username;
@@ -24,19 +22,17 @@ public class RabbitConfig {
     private String password;
 
     @Value("${spring.rabbitmq.daily_queue}")
-    private String DAILY_QUEUE;
+    private String dailyQueue;
 
     @Value("${spring.rabbitmq.alert_queue}")
-    private String ALERT_QUEUE;
+    private String alertQueue;
 
     @Value("${spring.rabbitmq.error_queue}")
-    private String ERROR_QUEUE;
-
-    Logger logger = Logger.getLogger(String.valueOf(RabbitConfig.class));
+    private String errorQueue;
 
     @Bean
     public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(LOCALHOST);
+        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(localhost);
         cachingConnectionFactory.setUsername(username);
         cachingConnectionFactory.setPassword(password);
         return cachingConnectionFactory;
@@ -49,17 +45,17 @@ public class RabbitConfig {
 
     @Bean
     public Queue dailyQueue() {
-        return new Queue(DAILY_QUEUE);
+        return new Queue(dailyQueue);
     }
 
     @Bean
     public Queue alertQueue() {
-        return new Queue(ALERT_QUEUE);
+        return new Queue(alertQueue);
     }
 
     @Bean
     public Queue errorQueue() {
-        return new Queue(ERROR_QUEUE);
+        return new Queue(errorQueue);
     }
 
 }
