@@ -5,22 +5,41 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import java.util.logging.Logger;
 
 @Configuration
 public class RabbitConfig {
-    private static final String LOCALHOST = "172.10.0.1";
-    private static final String DAILY_QUEUE = "daily_queue";
-    private static final String ALERT_QUEUE = "alert_queue";
-    private static final String ERROR_QUEUE = "error_queue";
+
+    @Value("${spring.rabbitmq.host}")
+    private static String LOCALHOST;
+
+    @Value("${spring.rabbitmq.username}")
+    private static String username;
+
+    @Value("${spring.rabbitmq.password}")
+    private static String password;
+
+    @Value("${spring.rabbitmq.daily_queue}")
+    private static String DAILY_QUEUE;
+
+    @Value("${spring.rabbitmq.alert_queue}")
+    private static String ALERT_QUEUE;
+
+    @Value("${spring.rabbitmq.error_queue}")
+    private static String ERROR_QUEUE;
 
     Logger logger = Logger.getLogger(String.valueOf(RabbitConfig.class));
 
     @Bean
     public ConnectionFactory connectionFactory() {
-        return new CachingConnectionFactory(LOCALHOST);
+        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(LOCALHOST);
+        cachingConnectionFactory.setUsername(username);
+        cachingConnectionFactory.setPassword(password);
+        return cachingConnectionFactory;
     }
 
     @Bean
