@@ -30,6 +30,9 @@ public class RabbitConfig {
     @Value("${spring.rabbitmq.error_queue}")
     private String errorQueue;
 
+    @Value("${spring.rabbitmq.common_queue}")
+    private String commonQueue;
+
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(localhost);
@@ -56,6 +59,11 @@ public class RabbitConfig {
     @Bean
     public Queue errorQueue() {
         return new Queue(errorQueue);
+    }
+
+    @Bean
+    public Queue commonQueue() {
+        return new Queue(commonQueue);
     }
 
 }

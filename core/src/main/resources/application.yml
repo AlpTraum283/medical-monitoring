@@ -7,3 +7,4 @@ spring:
     alert_queue: alert_queue
     daily_queue: daily_queue
     error_queue: error_queue
+    common_queue: common_monitoring
