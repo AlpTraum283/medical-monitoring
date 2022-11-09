@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="Aleksei" id="2">
+        <createTable tableName="person_data">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_dt" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="smallint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sex" type="char">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="medical_card_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <sql>
+            ALTER TABLE person_data
+            ADD CONSTRAINT check_id CHECK (person_data.parent_id != person_data.id)
+        </sql>
+
+        <createTable tableName="illness">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="medical_card_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="heaviness" type="char">
+                <constraints nullable="false"/>
+            </column>
+            <column name="appearance_dttm" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recovery_dt" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="medical_card">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="client_status" type="char">
+                <constraints nullable="false"/>
+            </column>
+            <column name="med_status" type="char">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registry_dt" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="contact">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="phone_number" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="profile_link" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="address">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="contact_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="index" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="building" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="flat" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="address"
+                                 baseColumnNames="contact_id"
+                                 constraintName="contact_id_fk"
+                                 referencedTableName="contact"
+                                 referencedColumnNames="id" />
+
+        <addForeignKeyConstraint baseTableName="illness"
+                                 baseColumnNames="medical_card_id"
+                                 constraintName="medical_card_id_fk"
+                                 referencedTableName="medical_card"
+                                 referencedColumnNames="id" />
+
+        <addForeignKeyConstraint baseTableName="person_data"
+                                 baseColumnNames="medical_card_id"
+                                 constraintName="medical_card_id_fk"
+                                 referencedTableName="medical_card"
+                                 referencedColumnNames="id" />
+
+        <addForeignKeyConstraint baseTableName="person_data"
+                                 baseColumnNames="contact_id"
+                                 constraintName="contact_id_fk"
+                                 referencedTableName="contact"
+                                 referencedColumnNames="id" />
+
+        <addForeignKeyConstraint baseTableName="person_data"
+                                 baseColumnNames="parent_id"
+                                 constraintName="parent_id_fk"
+                                 referencedTableName="person_data"
+                                 referencedColumnNames="id" />
+
+    </changeSet>
+
+
+</databaseChangeLog>

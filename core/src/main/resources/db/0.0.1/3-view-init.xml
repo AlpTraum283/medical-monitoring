@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="Aleksei" id="2">
+
+        <createView viewName="person_living_info" catalogName="person" replaceIfExists="false">
+            select p.first_name, p.last_name, a.city, a.building, a.flat
+            from person_data p, address a
+            where p.id = a.id
+        </createView>
+    </changeSet>
+
+
+</databaseChangeLog>
